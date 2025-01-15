@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Timer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .timer-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px 40px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 10px;
+        color: #333;
+      }
+
+      .timer {
+        font-size: 3rem;
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="timer-container">
+      <h1>Обратный отсчет</h1>
+      <div id="countdown" class="timer">05:00</div>
+    </div>
+
+    <script>
+      function startCountdown(minutes) {
+        let time = minutes * 60; // Переводим минуты в секунды
+        const countdownElement = document.getElementById("countdown");
+        let previousMinutes = minutes;
+
+        const countdownTimer = setInterval(() => {
+          let minutesLeft = Math.floor(time / 60); // Минуты, оставшиеся до 0
+          let secondsLeft = time % 60; // Секунды, оставшиеся до конца минуты
+
+          // Форматируем вывод (например, 04:08)
+          countdownElement.textContent = `${String(minutesLeft).padStart(
+            2,
+            "0"
+          )}:${String(secondsLeft).padStart(2, "0")}`;
+
+          // Каждая прошедшая минута выводит сообщение
+          if (minutesLeft < previousMinutes) {
+            alert("На 1 минуту стало меньше!");
+            previousMinutes = minutesLeft;
+          }
+
+          // Когда время заканчивается, таймер останавливается
+          if (time <= 0) {
+            clearInterval(countdownTimer);
+            alert("Время вышло!");
+          }
+
+          time--; // Уменьшаем время на 1 секунду
+        }, 1000); // Таймер срабатывает каждую секунду
+      }
+
+      // Запуск таймера на 5 минут
+      startCountdown(5);
+    </script>
+  </body>
+</html>
